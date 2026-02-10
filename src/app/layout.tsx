@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { WishlistProvider } from "@/contexts/wishlist-context";
+import { ComparisonProvider } from "@/contexts/comparison-context";
+import ComparisonBar from "@/components/products/comparison-bar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,8 +56,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
-        <Toaster />
+        <WishlistProvider>
+          <ComparisonProvider>
+            {children}
+            <ComparisonBar />
+            <Toaster />
+          </ComparisonProvider>
+        </WishlistProvider>
       </body>
     </html>
   );

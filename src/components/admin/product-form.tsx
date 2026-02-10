@@ -17,6 +17,7 @@ import { Switch } from "@/components/ui/switch";
 import { createClient } from "@/lib/supabase/client";
 import { slugify } from "@/lib/utils";
 import type { Product, Category } from "@/types/database";
+import ImageUpload from "@/components/admin/image-upload";
 
 interface ProductFormProps {
   initialData?: Product;
@@ -33,6 +34,9 @@ export default function ProductForm({ initialData, onSubmit }: ProductFormProps)
   const [affiliateUrl, setAffiliateUrl] = useState(initialData?.affiliate_url || "");
   const [affiliateSource, setAffiliateSource] = useState(initialData?.affiliate_source || "");
   const [imageUrl, setImageUrl] = useState(initialData?.image_url || "");
+  const [gallery, setGallery] = useState<string[]>(
+    Array.isArray(initialData?.gallery) ? initialData.gallery : []
+  );
   const [categoryId, setCategoryId] = useState(initialData?.category_id || "");
   const [features, setFeatures] = useState(
     initialData?.features ? JSON.stringify(initialData.features, null, 2) : ""
@@ -83,6 +87,7 @@ export default function ProductForm({ initialData, onSubmit }: ProductFormProps)
       affiliate_url: affiliateUrl,
       affiliate_source: affiliateSource || null,
       image_url: imageUrl || null,
+      gallery: gallery.length > 0 ? gallery : null,
       category_id: categoryId || null,
       features: parsedFeatures,
       pros: pros
@@ -194,15 +199,12 @@ export default function ProductForm({ initialData, onSubmit }: ProductFormProps)
           />
         </div>
 
-        {/* Image URL */}
+        {/* Main Product Image */}
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="image_url">Image URL</Label>
-          <Input
-            id="image_url"
-            type="url"
+          <ImageUpload
             value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="https://..."
+            onChange={(url) => setImageUrl(url as string)}
+            label="Main Product Image"
           />
         </div>
 
@@ -231,6 +233,17 @@ export default function ProductForm({ initialData, onSubmit }: ProductFormProps)
           placeholder="Product description..."
           rows={4}
           required
+        />
+      </div>
+
+      {/* Product Gallery */}
+      <div className="space-y-2">
+        <ImageUpload
+          value={gallery}
+          onChange={(urls) => setGallery(urls as string[])}
+          label="Product Gallery (Additional Images)"
+          multiple
+          maxFiles={5}
         />
       </div>
 
