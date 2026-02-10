@@ -9,7 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RatingStars } from "@/components/products/rating-stars";
 import { formatPrice, truncate } from "@/lib/utils";
-import { cn } from "@/lib/utils";
 import type { Product } from "@/types/database";
 
 interface ProductCardProps {

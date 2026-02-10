@@ -15,7 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { createClient } from "@/lib/supabase/client";
 import { formatDate } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, MailOpen, Trash2, Eye } from "lucide-react";
+import { Mail, MailOpen, Trash2 } from "lucide-react";
 import type { ContactMessage } from "@/types/database";
 
 export default function AdminMessagesPage() {
